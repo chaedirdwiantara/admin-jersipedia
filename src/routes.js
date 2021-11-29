@@ -18,6 +18,7 @@
 */
 import Dashboard from "views/Dashboard.js";
 import Icons from "views/Icons.js";
+import ListLiga from "views/Liga/ListLiga";
 
 var routes = [
   {
@@ -25,6 +26,13 @@ var routes = [
     name: "Dashboard",
     icon: "nc-icon nc-bank",
     component: Dashboard,
+    layout: "/admin",
+  },
+  {
+    path: "/liga",
+    name: "Master Liga",
+    icon: "nc-icon nc-world-2",
+    component: ListLiga,
     layout: "/admin",
   },
   {
