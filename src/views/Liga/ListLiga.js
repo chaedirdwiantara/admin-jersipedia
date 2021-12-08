@@ -1,6 +1,7 @@
 import { getListLiga } from "actions/LigaAction";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -31,6 +32,12 @@ class ListLiga extends Component {
             <Card>
               <CardHeader>
                 <CardTitle tag="h4">Master Liga</CardTitle>
+                <Link
+                  to="/admin/liga/tambah"
+                  className="btn btn-primary float-right"
+                >
+                  Tambah Liga
+                </Link>
               </CardHeader>
               <CardBody>
                 <Table>

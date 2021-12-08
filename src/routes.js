@@ -16,9 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.js";
-import Icons from "views/Icons.js";
-import ListLiga from "views/Liga/ListLiga";
+import { Dashboard, Icons, ListLiga, TambahLiga } from "./views";
 
 var routes = [
   {
@@ -27,6 +25,7 @@ var routes = [
     icon: "nc-icon nc-bank",
     component: Dashboard,
     layout: "/admin",
+    sidebar: true,
   },
   {
     path: "/liga",
@@ -34,6 +33,14 @@ var routes = [
     icon: "nc-icon nc-world-2",
     component: ListLiga,
     layout: "/admin",
+    sidebar: true,
+  },
+  {
+    path: "/liga/tambah",
+    name: "Tambah Liga",
+    component: TambahLiga,
+    layout: "/admin",
+    sidebar: false,
   },
   {
     path: "/icons",
@@ -41,6 +48,7 @@ var routes = [
     icon: "nc-icon nc-diamond",
     component: Icons,
     layout: "/admin",
+    sidebar: true,
   },
 ];
 export default routes;
