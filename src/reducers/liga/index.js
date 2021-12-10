@@ -1,8 +1,12 @@
-import { GET_LIST_LIGA } from "../../actions/LigaAction";
+import { GET_LIST_LIGA, TAMBAH_LIGA } from "../../actions/LigaAction";
 const initialState = {
   getListLigaLoading: false,
   getListLigaResult: false,
   getListLigaError: false,
+
+  tambahLigaLoading: false,
+  tambahLigaResult: false,
+  tambahLigaError: false,
 };
 
 export default function (state = initialState, action) {
@@ -13,6 +17,14 @@ export default function (state = initialState, action) {
         getListLigaLoading: action.payload.loading,
         getListLigaResult: action.payload.data,
         getListLigaError: action.payload.errorMessage,
+      };
+
+    case TAMBAH_LIGA:
+      return {
+        ...state,
+        tambahLigaLoading: action.payload.loading,
+        tambahLigaResult: action.payload.data,
+        tambahLigaError: action.payload.errorMessage,
       };
     default:
       return state;

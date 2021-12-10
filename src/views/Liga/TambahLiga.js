@@ -1,3 +1,4 @@
+import { tambahLiga } from "actions/LigaAction";
 import { getListLiga } from "actions/LigaAction";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -12,6 +13,7 @@ import {
   FormGroup,
   Input,
   Button,
+  Spinner,
 } from "reactstrap";
 import swal from "sweetalert";
 import DefaultImage from "../../assets/img/default-image.jpg";
@@ -50,14 +52,24 @@ class TambahLiga extends Component {
     event.preventDefault();
     if (imageToDB && namaLiga) {
       //proses lanjut ke action firebase
+      this.props.dispatch(tambahLiga(this.state));
     } else {
       //alert
       swal("Failed!", "Maaf nama liga dan logo liga harus diisi", "error");
     }
   };
 
+  componentDidUpdate(prevProps) {
+    const { tambahLigaResult } = this.props;
+    if (tambahLigaResult && prevProps.tambahLigaResult !== tambahLigaResult) {
+      swal("Sukses", "Liga Sukses Dibuat", "success");
+      this.props.history.push("/admin/liga");
+    }
+  }
+
   render() {
     const { image, namaLiga } = this.state;
+    const { tambahLigaLoading } = this.props;
     return (
       <div className="content">
         <Row>
@@ -105,9 +117,15 @@ class TambahLiga extends Component {
 
                   <Row>
                     <Col>
-                      <Button color="primary" type="submit">
-                        Submit
-                      </Button>
+                      {tambahLigaLoading ? (
+                        <Button color="primary" type="submit" disabled>
+                          <Spinner suze="sm" color="light" /> Loading
+                        </Button>
+                      ) : (
+                        <Button color="primary" type="submit">
+                          Submit
+                        </Button>
+                      )}
                     </Col>
                   </Row>
                 </form>
@@ -120,6 +138,10 @@ class TambahLiga extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  tambahLigaLoading: state.LigaReducer.tambahLigaLoading,
+  tambahLigaResult: state.LigaReducer.tambahLigaResult,
+  tambahLigaError: state.LigaReducer.tambahLigaError,
+});
 
 export default connect(mapStateToProps, null)(TambahLiga);
