@@ -62,9 +62,12 @@ class ListLiga extends Component {
                           </td>
                           <td>{getListLigaResult[key].namaLiga}</td>
                           <td>
-                            <Button color="warning">
+                            <Link
+                              className="btn btn-warning"
+                              to={"/admin/liga/edit/" + key}
+                            >
                               <i className="nc-icon nc-ruler-pencil"></i> Edit
-                            </Button>
+                            </Link>
                             <Button color="danger" className="ml-2">
                               <i className="nc-icon nc-basket"></i> Hapus
                             </Button>

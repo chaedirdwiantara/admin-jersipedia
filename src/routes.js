@@ -16,7 +16,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { Dashboard, Icons, ListLiga, TambahLiga } from "./views";
+import { Dashboard, Icons, ListLiga, TambahLiga, EditLiga } from "./views";
 
 var routes = [
   {
@@ -39,6 +39,13 @@ var routes = [
     path: "/liga/tambah",
     name: "Tambah Liga",
     component: TambahLiga,
+    layout: "/admin",
+    sidebar: false,
+  },
+  {
+    path: "/liga/edit/:id",
+    name: "Edit Liga",
+    component: EditLiga,
     layout: "/admin",
     sidebar: false,
   },
