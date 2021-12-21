@@ -1,4 +1,3 @@
-import { getListLiga } from "actions/LigaAction";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,18 +12,31 @@ import {
   Button,
   Spinner,
 } from "reactstrap";
+import { getListLiga, deleteLiga } from "actions/LigaAction";
+import swal from "sweetalert";
 
 class ListLiga extends Component {
   componentDidMount() {
     this.props.dispatch(getListLiga());
   }
+
+  removeData = (image, id) => {
+    //akses ke action
+    this.props.dispatch(deleteLiga(image, id));
+  };
+
+  componentDidUpdate(prevProps) {
+    const { deleteLigaResult } = this.props;
+
+    if (deleteLigaResult && prevProps.deleteLigaResult !== deleteLigaResult) {
+      swal("Sukses!", deleteLigaResult, "success");
+      this.props.dispatch(getListLiga());
+    }
+  }
+
   render() {
     const { getListLigaError, getListLigaLoading, getListLigaResult } =
       this.props;
-    // console.log(getListLigaLoading, "getListLigaLoading");
-    // console.log(getListLigaResult, "getListLigaResult");
-    // console.log(getListLigaError, "getListLigaError");
-    // console.log("---------------------");
     return (
       <div className="content">
         <Row>
@@ -68,7 +80,16 @@ class ListLiga extends Component {
                             >
                               <i className="nc-icon nc-ruler-pencil"></i> Edit
                             </Link>
-                            <Button color="danger" className="ml-2">
+                            <Button
+                              color="danger"
+                              className="ml-2"
+                              onClick={() =>
+                                this.removeData(
+                                  getListLigaResult[key].image,
+                                  key
+                                )
+                              }
+                            >
                               <i className="nc-icon nc-basket"></i> Hapus
                             </Button>
                           </td>
@@ -108,6 +129,10 @@ const mapStateToProps = (state) => ({
   getListLigaLoading: state.LigaReducer.getListLigaLoading,
   getListLigaResult: state.LigaReducer.getListLigaResult,
   getListLigaError: state.LigaReducer.getListLigaError,
+
+  deleteLigaLoading: state.LigaReducer.deleteLigaLoading,
+  deleteLigaResult: state.LigaReducer.deleteLigaResult,
+  deleteLigaError: state.LigaReducer.deleteLigaError,
 });
 
 export default connect(mapStateToProps, null)(ListLiga);

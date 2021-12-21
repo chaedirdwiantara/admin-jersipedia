@@ -6,6 +6,7 @@ export const GET_LIST_LIGA = "GET_LIST_LIGA";
 export const TAMBAH_LIGA = "TAMBAH_LIGA";
 export const GET_DETAIL_LIGA = "GET_DETAIL_LIGA";
 export const UPDATE_LIGA = "UPDATE_LIGA";
+export const DELETE_LIGA = "DELETE_LIGA";
 
 export const getListLiga = () => {
   return (dispatch) => {
@@ -165,5 +166,33 @@ export const updateLiga = (data) => {
           alert(error);
         });
     }
+  };
+};
+
+export const deleteLiga = (image, id) => {
+  return (dispatch) => {
+    dispatchLoading(dispatch, DELETE_LIGA);
+    //ambil file gambar lama dari firebase storage
+    var desertRef = FIREBASE.storage().refFromURL(image);
+    // Delete the file
+    desertRef
+      .delete()
+      .then(() => {
+        // hapus juga data di realtime database
+        FIREBASE.database()
+          .ref("ligas/" + id)
+          .remove()
+          .then(() => {
+            dispatchSuccess(dispatch, DELETE_LIGA, "Liga Sukses Dihapus");
+          })
+          .catch((error) => {
+            dispatchError(dispatch, DELETE_LIGA, error);
+            alert(error);
+          });
+      })
+      .catch((error) => {
+        dispatchError(dispatch, DELETE_LIGA, error);
+        alert(error);
+      });
   };
 };
