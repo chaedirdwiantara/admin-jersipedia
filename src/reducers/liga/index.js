@@ -2,6 +2,7 @@ import {
   GET_LIST_LIGA,
   TAMBAH_LIGA,
   GET_DETAIL_LIGA,
+  UPDATE_LIGA,
 } from "../../actions/LigaAction";
 const initialState = {
   getListLigaLoading: false,
@@ -15,6 +16,10 @@ const initialState = {
   getDetailLigaLoading: false,
   getDetailLigaResult: false,
   getDetailLigaError: false,
+
+  updateLigaLoading: false,
+  updateLigaResult: false,
+  updateLigaError: false,
 };
 
 export default function (state = initialState, action) {
@@ -41,6 +46,14 @@ export default function (state = initialState, action) {
         getDetailLigaLoading: action.payload.loading,
         getDetailLigaResult: action.payload.data,
         getDetailLigaError: action.payload.errorMessage,
+      };
+
+    case UPDATE_LIGA:
+      return {
+        ...state,
+        updateLigaLoading: action.payload.loading,
+        updateLigaResult: action.payload.data,
+        updateLigaError: action.payload.errorMessage,
       };
 
     default:
