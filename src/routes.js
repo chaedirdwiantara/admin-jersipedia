@@ -16,7 +16,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { Dashboard, Icons, ListLiga, TambahLiga, EditLiga } from "./views";
+import {
+  Dashboard,
+  Icons,
+  ListLiga,
+  TambahLiga,
+  EditLiga,
+  ListJersey,
+} from "./views";
 
 var routes = [
   {
@@ -48,6 +55,14 @@ var routes = [
     component: EditLiga,
     layout: "/admin",
     sidebar: false,
+  },
+  {
+    path: "/jersey",
+    name: "Master Jersey",
+    icon: "nc-icon nc-cart-simple",
+    component: ListJersey,
+    layout: "/admin",
+    sidebar: true,
   },
   {
     path: "/icons",

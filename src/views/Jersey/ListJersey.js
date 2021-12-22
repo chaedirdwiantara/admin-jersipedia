@@ -9,33 +9,26 @@ import {
   CardTitle,
   CardBody,
   Table,
-  Button,
   Spinner,
+  Button,
 } from "reactstrap";
-import { getListLiga, deleteLiga } from "actions/LigaAction";
-import swal from "sweetalert";
+import { getListJersey } from "actions/JerseyAction";
 
-class ListLiga extends Component {
+class ListJersey extends Component {
   componentDidMount() {
-    this.props.dispatch(getListLiga());
+    this.props.dispatch(getListJersey());
   }
 
   removeData = (image, id) => {
-    //akses ke action
-    this.props.dispatch(deleteLiga(image, id));
+    //tahan
   };
 
   componentDidUpdate(prevProps) {
-    const { deleteLigaResult } = this.props;
-
-    if (deleteLigaResult && prevProps.deleteLigaResult !== deleteLigaResult) {
-      swal("Sukses!", deleteLigaResult, "success");
-      this.props.dispatch(getListLiga());
-    }
+    //tahan
   }
 
   render() {
-    const { getListLigaError, getListLigaLoading, getListLigaResult } =
+    const { getListJerseyError, getListJerseyLoading, getListJerseyResult } =
       this.props;
     return (
       <div className="content">
@@ -43,73 +36,74 @@ class ListLiga extends Component {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Master Liga</CardTitle>
+                <CardTitle tag="h4">Master Jersey</CardTitle>
                 <Link
-                  to="/admin/liga/tambah"
+                  to="/admin/jersey/tambah"
                   className="btn btn-primary float-right"
                 >
-                  Tambah Liga
+                  Tambah Jersey
                 </Link>
               </CardHeader>
               <CardBody>
                 <Table>
                   <thead className="text-primary">
                     <tr>
-                      <th>Logo</th>
-                      <th>Nama Liga</th>
+                      <th>Foto</th>
+                      <th>Nama Jersey</th>
+                      <th>Harga</th>
+                      <th>Berat</th>
+                      <th>Jenis</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {getListLigaResult ? (
-                      Object.keys(getListLigaResult).map((key) => (
+                    {getListJerseyResult ? (
+                      Object.keys(getListJerseyResult).map((key) => (
                         <tr key={key}>
                           <td>
                             <img
-                              src={getListLigaResult[key].image}
+                              src={getListJerseyResult[key].gambar[0]}
                               width="100"
-                              alt={getListLigaResult[key].namaLiga}
+                              alt={getListJerseyResult[key].nama}
                             />
                           </td>
-                          <td>{getListLigaResult[key].namaLiga}</td>
+                          <td>{getListJerseyResult[key].nama}</td>
+                          <td>Rp. {getListJerseyResult[key].harga}</td>
+                          <td>{getListJerseyResult[key].berat} kg</td>
+                          <td>{getListJerseyResult[key].jenis}</td>
                           <td>
                             <Link
                               className="btn btn-warning"
-                              to={"/admin/liga/edit/" + key}
+                              to={"/admin/Jersey/edit/" + key}
                             >
                               <i className="nc-icon nc-ruler-pencil"></i> Edit
                             </Link>
                             <Button
                               color="danger"
                               className="ml-2"
-                              onClick={() =>
-                                this.removeData(
-                                  getListLigaResult[key].image,
-                                  key
-                                )
-                              }
+                              onClick={() => {}}
                             >
                               <i className="nc-icon nc-basket"></i> Hapus
                             </Button>
                           </td>
                         </tr>
                       ))
-                    ) : getListLigaLoading ? (
+                    ) : getListJerseyLoading ? (
                       <tr>
-                        <td colSpan="3" align="center">
+                        <td colSpan="6" align="center">
                           <Spinner color="primary" />
                         </td>
                       </tr>
-                    ) : getListLigaError ? (
+                    ) : getListJerseyError ? (
                       <tr>
-                        <td colSpan="3" align="center">
-                          {getListLigaError}
+                        <td colSpan="6" align="center">
+                          {getListJerseyError}
                         </td>
                       </tr>
                     ) : (
                       <tr>
-                        <td colSpan="3" align="center">
+                        <td colSpan="6" align="center">
                           Data Kosong
                         </td>
                       </tr>
@@ -126,13 +120,9 @@ class ListLiga extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  getListLigaLoading: state.LigaReducer.getListLigaLoading,
-  getListLigaResult: state.LigaReducer.getListLigaResult,
-  getListLigaError: state.LigaReducer.getListLigaError,
-
-  deleteLigaLoading: state.LigaReducer.deleteLigaLoading,
-  deleteLigaResult: state.LigaReducer.deleteLigaResult,
-  deleteLigaError: state.LigaReducer.deleteLigaError,
+  getListJerseyLoading: state.JerseyReducer.getListJerseyLoading,
+  getListJerseyResult: state.JerseyReducer.getListJerseyResult,
+  getListJerseyError: state.JerseyReducer.getListJerseyError,
 });
 
-export default connect(mapStateToProps, null)(ListLiga);
+export default connect(mapStateToProps, null)(ListJersey);
