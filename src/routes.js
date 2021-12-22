@@ -23,6 +23,7 @@ import {
   TambahLiga,
   EditLiga,
   ListJersey,
+  TambahJersey,
 } from "./views";
 
 var routes = [
@@ -63,6 +64,13 @@ var routes = [
     component: ListJersey,
     layout: "/admin",
     sidebar: true,
+  },
+  {
+    path: "/jersey/tambah",
+    name: "Tambah Jersey",
+    component: TambahJersey,
+    layout: "/admin",
+    sidebar: false,
   },
   {
     path: "/icons",
